@@ -6,8 +6,8 @@ This API is able to allow a user to create an account as well as to handling bas
 
 ## Links
 
-* Heroku:
-* PR: 
+* Heroku: https://bearer-auth-h.herokuapp.com/
+* PR: https://github.com/hasnaa38/bearer-auth-h/pull/1
 
 ## Endpoint Results
 
