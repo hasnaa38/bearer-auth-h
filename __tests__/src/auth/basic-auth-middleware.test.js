@@ -2,6 +2,9 @@
 
 const middleware = require('../../../src/auth/middleware/basic.js');
 const { db, users } = require('../../../src/auth/models/index.js');
+const {server} = require('../../../src/server.js');
+const supertest = require('supertest');
+const mockRequest = supertest(server);
 
 let userInfo = {
   admin: { username: 'admin-basic', password: 'password' },
@@ -31,8 +34,13 @@ describe('Auth Middleware', () => {
 
   describe('user authentication', () => {
 
-    it('fails a login for a user (admin) with the incorrect basic credentials', () => {
-      // Change the request to match this test case
+    it('fails a login for a user (admin) with the incorrect basic credentials', async () => {
+      // sign in with the right user
+      await mockRequest.post('/signup').send({
+        username: "admin",
+        password: "password"
+      });
+      // 2- send wrong req
       req.headers = {
         authorization: 'Basic YWRtaW46Zm9v',
       };
@@ -45,19 +53,15 @@ describe('Auth Middleware', () => {
 
     });
 
-    it('logs in an admin user with the right credentials', () => {
-      // Change the request to match this test case
+    it('logs in an admin user with the right credentials', async () => {
+      // 3- send correct req
       req.headers = {
-        authorization: 'Basic YWRtaW46cGFzc3dvcmQ=',
+        authorization: `Basic YWRtaW46cGFzc3dvcmQ=`,
       };
-
       return middleware(req, res, next)
         .then(() => {
-          expect(next).not.toHaveBeenCalled();
+          expect(next).toHaveBeenCalled();
         });
-
     });
-
   });
-
 });

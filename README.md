@@ -27,6 +27,10 @@ This API is able to allow a user to create an account as well as to handling bas
 
 ![endpoint4](./images/secret.PNG)
 
+## Passed Tests
+
+![tests](./images/tests.PNG)
+
 ## UML
 
 ![uml](./images/lab07.png)
